@@ -21,9 +21,7 @@ const loadPlayerWeaponProgress = async (data) => {
   }
   const player = await loadPlayer(data.playerName);
   const response = await Cache(
-    `https://battlelog.battlefield.com/bf4/warsawWeaponsPopulateStats/${
-      player.personaId
-    }/1/unlocks/`,
+    `https://battlelog.battlefield.com/bf4/warsawWeaponsPopulateStats/${player.personaId}/1/unlocks/`,
     {
       duration: "0m",
       type: "json",
@@ -32,21 +30,21 @@ const loadPlayerWeaponProgress = async (data) => {
   const result = [];
   for (const weapon of response.data.mainWeaponStats) {
     const unlockWeapon = data.weaponUnlocks[weapon.guid];
-    const nextUnlock = unlockWeapon.unlocks.find(
-      (unlock) => unlock.valueNeeded > weapon.kills
-    );
-    if (unlockWeapon && nextUnlock) {
-      result.push({
-        guid: weapon.guid,
-        category: weapon.category,
-        slug: weapon.slug,
-        kills: weapon.kills,
-        nextUnlockKills: nextUnlock
-          ? nextUnlock.valueNeeded - weapon.kills
-          : undefined,
-        nextUnlock,
-        unlockTree: unlockWeapon.unlocks,
-      });
+    if (unlockWeapon) {
+      const nextUnlock = unlockWeapon.unlocks.find(
+        (unlock) => unlock.valueNeeded > weapon.kills
+      );
+      if (nextUnlock) {
+        result.push({
+          guid: weapon.guid,
+          category: weapon.category,
+          slug: weapon.slug,
+          kills: weapon.kills,
+          nextUnlockKills:  nextUnlock.valueNeeded - weapon.kills,
+          nextUnlock,
+          unlockTree: unlockWeapon.unlocks,
+        });
+      }
     }
   }
   return result;
