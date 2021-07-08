@@ -1,0 +1,195 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: system-ui;
+}
+
+body {
+  background: #222422;
+  color: #fff;
+}
+
+.weaponUnlocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: 0.5rem;
+}
+
+.weaponUnlock {
+  padding: 0.5rem;
+  --weapon-kills: 6;
+  --unlock-start: 50;
+  --unlock-completed: 100;
+  --is-unlock-inactive: clamp(
+    0,
+    calc(var(--unlock-start) - var(--weapon-kills)),
+    1
+  );
+  --is-unlock-completed: clamp(
+    0,
+    calc(var(--weapon-kills) - var(--unlock-completed)),
+    1
+  );
+  --is-unlock-active: clamp(
+    0,
+    calc(1 - var(--is-unlock-inactive) - var(--is-unlock-completed)),
+    1
+  );
+
+  --unlock-color-hue: calc(
+    100deg * (var(--is-unlock-active) * 2 + var(--is-unlock-completed))
+  );
+
+  --color-lightness-start: 5%;
+  --color-lightness-step: 10%;
+
+  background: linear-gradient(
+      135deg,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 0),
+          .5
+        )
+        50%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 1),
+          .5
+        )
+        50%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 1),
+          .5
+        )
+        60%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 2),
+          .5
+        )
+        60%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 2),
+          .5
+        )
+        70%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 3),
+          .5
+        )
+        70%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 3),
+          .5
+        )
+        80%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 4),
+          .5
+        )
+        80%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 4),
+          .5
+        )
+        90%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 5),
+          .5
+        )
+        90%
+    ),
+    linear-gradient(
+      45deg,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 0),
+          1
+        )
+        50%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 1),
+          1
+        )
+        50%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 1),
+          1
+        )
+        60%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 2),
+          1
+        )
+        60%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 2),
+          1
+        )
+        70%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 3),
+          1
+        )
+        70%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 3),
+          1
+        )
+        80%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 4),
+          1
+        )
+        80%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 4),
+          1
+        )
+        90%,
+      hsla(
+          var(--unlock-color-hue),
+          50%,
+          calc(var(--color-lightness-start) + var(--color-lightness-step) * 5),
+          1
+        )
+        90%
+    );
+}

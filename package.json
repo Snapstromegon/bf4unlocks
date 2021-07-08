@@ -1,0 +1,19 @@
+{
+  "name": "bf4unlocks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "eleventy",
+    "serve": "eleventy --serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "^1.0.0-canary.38",
+    "@11ty/eleventy-cache-assets": "^2.2.1",
+    "node-fetch": "^2.6.1"
+  }
+}
