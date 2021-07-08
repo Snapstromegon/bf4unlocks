@@ -9,7 +9,7 @@ eleventyComputed:
 
 # BF4 Unlocker 
 
-## Player {{ playerWeaponData.player.personaName }}
+## Player {{ playerWeaponData.player.personaName }} ({{ eleventy.serverless.query.playerName }})
 
 {% assign sortedWeapons = playerWeaponData.weaponProgress | sort: "nextUnlockKills" %}
 
