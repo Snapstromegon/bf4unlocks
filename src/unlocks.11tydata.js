@@ -32,7 +32,7 @@ const loadPlayerWeaponProgress = async (data) => {
   const result = [];
   for (const weapon of response.data.mainWeaponStats) {
     const unlockWeapon = data.weaponUnlocks[weapon.guid];
-    const nextUnlock = unlockWeapon?.unlocks.find(
+    const nextUnlock = unlockWeapon.unlocks.find(
       (unlock) => unlock.valueNeeded > weapon.kills
     );
     if (unlockWeapon && nextUnlock) {
@@ -45,7 +45,7 @@ const loadPlayerWeaponProgress = async (data) => {
           ? nextUnlock.valueNeeded - weapon.kills
           : undefined,
         nextUnlock,
-        unlockTree: unlockWeapon?.unlocks,
+        unlockTree: unlockWeapon.unlocks,
       });
     }
   }
