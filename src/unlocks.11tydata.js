@@ -4,6 +4,7 @@ const { URLSearchParams } = require("url");
 const loadPlayer = async (playerName) => {
   const params = new URLSearchParams();
   params.append("query", playerName);
+  console.log(`Searching for player ${playerName}`)
   const response = await Cache(
     "https://battlelog.battlefield.com/bf4/search/query",
     {
@@ -12,6 +13,7 @@ const loadPlayer = async (playerName) => {
       fetchOptions: { method: "POST", body: params },
     }
   );
+  console.log(`Found Player ${response.data[0]}`);
   return response.data[0];
 };
 
@@ -20,6 +22,9 @@ const loadPlayerWeaponProgress = async (data) => {
     return;
   }
   const player = await loadPlayer(data.playerName);
+  console.log(
+    `Loading progress for player ${data.playerName} (${player.personaId})`
+  );
   const response = await Cache(
     `https://battlelog.battlefield.com/bf4/warsawWeaponsPopulateStats/${player.personaId}/1/unlocks/`,
     {
@@ -27,6 +32,7 @@ const loadPlayerWeaponProgress = async (data) => {
       type: "json",
     }
   );
+  console.log(`Progress loaded for ${data.playerName}`)
   const result = [];
   for (const weapon of response.data.mainWeaponStats) {
     const unlockWeapon = data.weaponUnlocks[weapon.guid];
