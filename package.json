@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@11ty/eleventy": "^1.0.0-canary.38",
+    "@11ty/eleventy": "^1.0.0-canary.44",
     "@11ty/eleventy-cache-assets": "^2.2.1",
     "node-fetch": "^2.6.1"
   }

@@ -1,5 +1,6 @@
 _site
 node_modules
 .cache
+cache
 netlify/functions/serverless/*
 !netlify/functions/serverless/index.js

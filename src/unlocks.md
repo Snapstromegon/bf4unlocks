@@ -15,6 +15,8 @@ eleventyComputed:
 
 <div class="weapons">
 {% for weapon in sortedWeapons %}
+{% if weapon.nextUnlock.name contains "Battelpack" %}
+{% else %}
 
 <div class="weapon">
 
@@ -36,5 +38,6 @@ eleventyComputed:
 {% endfor %}
 </div>
 </div>
+{% endif %}
 {% endfor %}
 </div>
