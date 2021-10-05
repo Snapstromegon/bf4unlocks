@@ -1,6 +1,16 @@
 const Cache = require("@11ty/eleventy-cache-assets");
 const { URLSearchParams } = require("url");
 
+const CACHE_OPTIONS = {
+  duration: "0m",
+  type: "json",
+};
+if (process.env.ELEVENTY_SERVERLESS) {
+  // Instead of ".cache" default because files/directories
+  // that start with a dot are not bundled by default
+  CACHE_OPTIONS.directory = "cache";
+}
+
 const loadPlayer = async (playerName) => {
   const params = new URLSearchParams();
   params.append("query", playerName);
@@ -8,9 +18,8 @@ const loadPlayer = async (playerName) => {
   const response = await Cache(
     "https://battlelog.battlefield.com/bf4/search/query",
     {
-      duration: "0m",
-      type: "json",
       fetchOptions: { method: "POST", body: params },
+      ...CACHE_OPTIONS
     }
   );
   console.log(`Found Player ${response.data[0]}`);
@@ -27,10 +36,7 @@ const loadPlayerWeaponProgress = async (data) => {
   );
   const response = await Cache(
     `https://battlelog.battlefield.com/bf4/warsawWeaponsPopulateStats/${player.personaId}/1/unlocks/`,
-    {
-      duration: "0m",
-      type: "json",
-    }
+    CACHE_OPTIONS
   );
   console.log(`Progress loaded for ${data.playerName}`)
   const result = [];
