@@ -1,4 +1,5 @@
 const Cache = require("@11ty/eleventy-cache-assets");
+const fetch = require("node-fetch");
 const { URLSearchParams } = require("url");
 
 const CACHE_OPTIONS = {
@@ -14,14 +15,13 @@ if (process.env.ELEVENTY_SERVERLESS) {
 const loadPlayer = async (playerName) => {
   const params = new URLSearchParams();
   params.append("query", playerName);
-  console.log(`Searching for player ${playerName}`)
-  const response = await Cache(
-    "https://battlelog.battlefield.com/bf4/search/query",
-    {
-      fetchOptions: { method: "POST", body: params },
-      ...CACHE_OPTIONS
-    }
-  );
+  console.log(`Searching for player ${playerName}`);
+  const response = await (
+    await fetch("https://battlelog.battlefield.com/bf4/search/query", {
+      method: "POST",
+      body: params,
+    })
+  ).json();
   console.log(`Found Player ${response.data[0]}`);
   return response.data[0];
 };
@@ -34,11 +34,12 @@ const loadPlayerWeaponProgress = async (data) => {
   console.log(
     `Loading progress for player ${data.playerName} (${player.personaId})`
   );
-  const response = await Cache(
-    `https://battlelog.battlefield.com/bf4/warsawWeaponsPopulateStats/${player.personaId}/1/unlocks/`,
-    CACHE_OPTIONS
-  );
-  console.log(`Progress loaded for ${data.playerName}`)
+  const response = await (
+    await fetch(
+      `https://battlelog.battlefield.com/bf4/warsawWeaponsPopulateStats/${player.personaId}/1/unlocks/`
+    )
+  ).json();
+  console.log(`Progress loaded for ${data.playerName}`);
   const result = [];
   for (const weapon of response.data.mainWeaponStats) {
     const unlockWeapon = data.weaponUnlocks[weapon.guid];
@@ -52,7 +53,7 @@ const loadPlayerWeaponProgress = async (data) => {
           category: weapon.category,
           slug: weapon.slug,
           kills: weapon.kills,
-          nextUnlockKills:  nextUnlock.valueNeeded - weapon.kills,
+          nextUnlockKills: nextUnlock.valueNeeded - weapon.kills,
           nextUnlock,
           unlockTree: unlockWeapon.unlocks,
         });

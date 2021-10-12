@@ -2,7 +2,6 @@
 layout: main.njk
 permalink:
   serverless: /unlocks/
-  # build: /unlocks/
 eleventyComputed:
   playerName: "{{ eleventy.serverless.query.playerName | default: 'Snapstromegon' }}"
 ---
