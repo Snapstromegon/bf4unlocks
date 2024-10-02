@@ -14,7 +14,7 @@ eleventyComputed:
 
 <div class="weapons">
 {% for weapon in sortedWeapons %}
-{% if weapon.nextUnlock.name contains "Battelpack" %}
+{% if weapon.nextUnlock.name contains "Battelpack" and false %}
 {% else %}
 
 <div class="weapon">
@@ -24,7 +24,7 @@ eleventyComputed:
 <div class="weaponUnlocks">
 {% assign lastValueNeeded = 0 %}
 {% for unlock in weapon.unlockTree %}
-<div class="weaponUnlock {% if weapon.kills >= unlock.valueNeeded %}completed{% elsif weapon.kills >= lastValueNeeded %}active{% else %}open{% endif %}" style="
+<div class="weaponUnlock {%if unlock.isBattelpack %}battelpack{% endif %} {% if weapon.kills >= unlock.valueNeeded %}completed{% elsif weapon.kills >= lastValueNeeded %}active{% else %}open{% endif %}" style="
   --weapon-kills: {{ weapon.kills }};
   --unlock-completed: {{ unlock.valueNeeded }};
   --unlock-start: {{ lastValueNeeded }};">

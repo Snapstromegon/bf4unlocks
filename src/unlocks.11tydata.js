@@ -22,7 +22,7 @@ const loadPlayer = async (playerName) => {
       body: params,
     })
   ).json();
-  console.log(`Found Player ${response.data[0]}`);
+  console.log(`Found Player`, response.data[0]);
   return response.data[0];
 };
 
@@ -44,16 +44,21 @@ const loadPlayerWeaponProgress = async (data) => {
   for (const weapon of response.data.mainWeaponStats) {
     const unlockWeapon = data.weaponUnlocks[weapon.guid];
     if (unlockWeapon) {
-      const nextUnlock = unlockWeapon.unlocks.find(
-        (unlock) => unlock.valueNeeded > weapon.kills
-      );
+      const nextUnlock =
+        unlockWeapon.unlocks.find(
+          (unlock) => unlock.valueNeeded > weapon.kills
+        );
+      for (const unlock of unlockWeapon.unlocks) {
+        unlock.isBattelpack = unlock.name.startsWith("Battelpack");
+      }
       if (nextUnlock) {
         result.push({
           guid: weapon.guid,
           category: weapon.category,
           slug: weapon.slug,
           kills: weapon.kills,
-          nextUnlockKills: nextUnlock.valueNeeded - weapon.kills,
+          nextUnlockKills:
+            (nextUnlock?.valueNeeded || weapon.kills) - weapon.kills,
           nextUnlock,
           unlockTree: unlockWeapon.unlocks,
         });
